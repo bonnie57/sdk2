@@ -58,7 +58,7 @@ export class RoyaltyClient {
 
   /**
    * Allows the function caller to pay royalties to the receiver IP asset on behalf of the payer IP asset.
-   * @param request - The request object that contains all data needed to pay royalty on behalf.
+   * @param request - The request object thadt contains all data needed to pay royalty on behalf.
    *   @param request.receiverIpId The ipId that receives the royalties.
    *   @param request.payerIpId The ID of the IP asset that pays the royalties.
    *   @param request.token The token to use to pay the royalties.
