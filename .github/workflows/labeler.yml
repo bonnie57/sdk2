@@ -1,0 +1,35 @@
+name: "Pull Request"
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
+jobs:
+  label_pull_request_by_branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Linear team from branch name
+        id: get_linear_team
+        run: |
+          branch_name=${{ github.head_ref }}
+          echo $branch_name
+          if [[ "${branch_name}" =~ ([a-zA-Z]{2,3})-[0-9]+ ]]; then
+            # BASH_REMATCH contains the matching groups from a previous regex test
+            case "${BASH_REMATCH[1]^^}" in
+              LIN) linear_team="linear";;
+              PLT) linear_team="platform";;
+              # {LINEAR-IDENTIFIER} linear_team="{yourLabel}";;
+            esac
+            echo "the team is $linear_team"
+            echo "TEAM=$linear_team" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Label pull request with Linear team
+        if: steps.get_linear_team.outputs.SQUAD != null
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const team = '${{ steps.get_linear_team.outputs.TEAM }}';
+            github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: [team]
+            });
