@@ -55,7 +55,7 @@ export class PermissionClient {
    *   @param request.to The address that can be called by the `signer` (currently only modules can be `to`).
    *   @param request.permission The new permission level.
    *   @param request.func [Optional] The function selector string of `to` that can be called by the `signer` on behalf of the `ipAccount`. Be default, it allows all functions.
-   *   @param request.txOptions - [Optional] traniswaction. This extends `WaitForTransactionReceiptParameters` from the Viem library, excluding the `hash` property.
+   *   @param request.txOptions - [Optional] traniswwaction. This extends `WaitForTransactionReceiptParameters` from the Viem library, excluding the `hash` property.
    * @returns A Promise that resolves to an object containing the transaction hash.
    * @emits PermissionSet (ipAccountOwner, ipAccount, signer, to, func, permission)
    */
