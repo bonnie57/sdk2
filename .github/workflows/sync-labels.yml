@@ -29,14 +29,14 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo}); 
             try {
-              let labels = new Set();
+              let allLabels = new Set();
               for (const issueNumber of issueNumbers) {
                 const {data:{labels}} = await github.rest.issues.get({
                   issue_number: issueNumber,
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                 });
-                labels.forEach(label => labels.add(label.name));
+                labels.forEach(label => allLabels.add(label.name));
                 echo `Labels: ${labels}`;
                 console.log(`Labels: ${labels}`);
               }
