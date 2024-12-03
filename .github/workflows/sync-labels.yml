@@ -29,12 +29,24 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo}); 
             try {
-              const {data:{labels}} = await github.rest.issues.get({
-                issue_number: issueNumbers[0],
+              let labels = new Set();
+              for (const issueNumber of issueNumbers) {
+                const {data:{labels}} = await github.rest.issues.get({
+                  issue_number: issueNumber,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                });
+                labels.forEach(label => labels.add(label.name));
+                echo `Labels: ${labels}`;
+                console.log(`Labels: ${labels}`);
+              }
+              await github.rest.issues.addLabels({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
+                issue_number: context.issue.number,
+                labels: labels,
               });
-              console.log(labels);
+              console.log("Labels: ", labels);
             } catch (error) {
               console.log(`Error: ${error}`);
               return '';
@@ -49,9 +61,3 @@ jobs:
           script: |
             const labels = ${{env.labels}}.split(",");
             echo `Applying labels: ${label.split(",")}`;
-            await github.rest.issues.addLabels({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              labels: labels,
-            });
