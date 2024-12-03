@@ -37,8 +37,7 @@ jobs:
                   repo: context.repo.repo,
                 });
                 labels.forEach(label => allLabels.add(label.name));
-                echo `Labels: ${labels}`;
-                console.log(`Labels: ${labels}`);
+                console.log(labels);
               }
               await github.rest.issues.addLabels({
                 owner: context.repo.owner,
