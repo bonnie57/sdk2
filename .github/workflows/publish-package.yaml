@@ -17,8 +17,8 @@ jobs:
     needs: [timestamp]
     runs-on: ubuntu-latest
     outputs:
-      core_sdk_version_to_be_published: ${{ steps.get_version_to_publish.outputs.CORE_SDK_VERSION_TO_BE_PUBLISHED }}
-      react_sdk_version_to_be_published: ${{ steps.get_version_to_publish.outputs.REACT_SDK_VERSION_TO_BE_PUBLISHED }}
+      CORE_SDK_VERSION_TO_BE_PUBLISHED: ${{ steps.get_version_to_publish.outputs.CORE_SDK_VERSION_TO_BE_PUBLISHED }}
+      REACT_SDK_VERSION_TO_BE_PUBLISHED: ${{ steps.get_version_to_publish.outputs.REACT_SDK_VERSION_TO_BE_PUBLISHED }}
     steps:
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
@@ -36,8 +36,8 @@ jobs:
     needs: [timestamp, print_version_to_publish]
     runs-on: ubuntu-latest
     outputs:
-      core_sdk_latest_version: ${{ steps.get_latest_version.outputs.CORE_SDK_LATEST_VERSION }}
-      react_sdk_latest_version: ${{ steps.get_latest_version.outputs.REACT_SDK_LATEST_VERSION }}
+      CORE_SDK_LATEST_VERSION: ${{ steps.get_latest_version.outputs.CORE_SDK_LATEST_VERSION }}
+      REACT_SDK_LATEST_VERSION: ${{ steps.get_latest_version.outputs.REACT_SDK_LATEST_VERSION }}
     steps:
       - name: Get latest package version
         id: get_latest_version
@@ -54,15 +54,15 @@ jobs:
     needs: [print_version_to_publish, fetch_latest_version]
     runs-on: ubuntu-latest
     outputs:
-      is_publish_core_sdk: ${{ steps.fail_if_version_is_same.outputs.IS_PUBLISH_CORE_SDK }}
-      is_publish_react_sdk: ${{ steps.fail_if_version_is_same.outputs.IS_PUBLISH_REACT_SDK }}
+      IS_PUBLISH_CORE_SDK: ${{ steps.fail_if_version_is_same.outputs.IS_PUBLISH_CORE_SDK }}
+      IS_PUBLISH_REACT_SDK: ${{ steps.fail_if_version_is_same.outputs.IS_PUBLISH_REACT_SDK }}
     steps:
       - name: Fail if version is the same
         run: |
-          CORE_SDK_LATEST_VERSION="${{ needs.fetch_latest_version.outputs.core_sdk_latest_version }}"
-          CORE_SDK_VERSION_TO_BE_PUBLISHED="${{ needs.print_version_to_publish.outputs.core_sdk_version_to_be_published }}"
-          REACT_SDK_LATEST_VERSION="${{ needs.fetch_latest_version.outputs.react_sdk_latest_version }}"
-          REACT_SDK_VERSION_TO_BE_PUBLISHED="${{ needs.print_version_to_publish.outputs.react_sdk_version_to_be_published }}"
+          CORE_SDK_LATEST_VERSION="${{ needs.fetch_latest_version.outputs.CORE_SDK_LATEST_VERSION }}"
+          CORE_SDK_VERSION_TO_BE_PUBLISHED="${{ needs.print_version_to_publish.outputs.CORE_SDK_VERSION_TO_BE_PUBLISHED }}"
+          REACT_SDK_LATEST_VERSION="${{ needs.fetch_latest_version.outputs.REACT_SDK_LATEST_VERSION }}"
+          REACT_SDK_VERSION_TO_BE_PUBLISHED="${{ needs.print_version_to_publish.outputs.REACT_SDK_VERSION_TO_BE_PUBLISHED }}"
 
           IS_PUBLISH_CORE_SDK=false
           IS_PUBLISH_REACT_SDK=false
@@ -89,7 +89,7 @@ jobs:
 
   fetch_last_tag:
     needs: [fail_if_version_is_same]
-    if: ${{ (needs.fail_if_version_is_same.outputs.is_publish_core_sdk == 'true' || needs.fail_if_version_is_same.outputs.is_publish_react_sdk == 'true') && github.event_name == 'push' }}
+    if: ${{ (needs.fail_if_version_is_same.outputs.IS_PUBLISH_CORE_SDK == 'true' || needs.fail_if_version_is_same.outputs.IS_PUBLISH_REACT_SDK == 'true') && github.event_name == 'push' }}
     runs-on: ubuntu-latest
     outputs:
       CORE_SDK_LATEST_TAG: ${{ steps.get_last_tag.outputs.CORE_SDK_LATEST_TAG }}
