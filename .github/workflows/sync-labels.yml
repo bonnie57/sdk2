@@ -69,7 +69,7 @@ jobs:
         with:
           script: |
             console.log("${{steps.check_labels_are_same.outputs.result}}");
-            const labels = ${{ steps.get_issue_labels.outputs.result }};
+            const labels = ${{ steps.get_issue_labels.outputs.result }}.split(",");
             console.log(`Applying labels: ${labels}`);
             await github.rest.issues.addLabels({
               owner: context.repo.owner,
