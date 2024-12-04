@@ -64,7 +64,7 @@ jobs:
             console.log("PR Labels: ", prLabelNames);
             console.log("All Labels: ", issueLabels);
             const combinedLabels = Array.from(new Set([...issueLabels.split(","), ...prLabelNames.split(",")])).sort().join(",");  
-            const isSame = prLabelNames === allLabels;
+            const isSame = prLabelNames === issueLabels;
             core.setOutput('isSame', isSame.toString());
             core.setOutput('labels', combinedLabels);
 
