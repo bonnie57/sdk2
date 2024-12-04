@@ -22,7 +22,6 @@ jobs:
         with:
           script: |
             const issueNumbers = process.env.ISSUE_NUMBERS.split(",");
-            console.log(process.env);
             let allLabels = new Set();
             for (const issueNumber of issueNumbers) {
               try {
@@ -41,12 +40,11 @@ jobs:
             if (allLabels.size === 0) {
               console.log("No labels found");
               core.setOutput('labels_empty', 'true');
-              return '';
             } else {
               const sortedLabels = Array.from(allLabels).sort().join(",");
               console.log("Labels: ", sortedLabels);
               core.setOutput('labels_empty', 'false');
-              return sortedLabels;
+            }
 
       - name: Check if labels are the same
         id: check_labels_are_same
