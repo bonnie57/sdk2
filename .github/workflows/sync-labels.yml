@@ -52,21 +52,14 @@ jobs:
         with:
           script: |
             const allLabels = core.getInput('allLabels');
-            console.log(allLabels);
-            console.log("${{ steps.get_issue_labels.outputs.allLabels }}");
             const labels = allLabels.split(",");
-            console.log(labels);
             const prLabels = await github.rest.issues.listLabelsOnIssue({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
             });
-            console.log(prLabels);
             const prLabelNames = prLabels.data.map(label => label.name).join(",");
-            console.log(prLabelNames);
             const isSame = labels.every(label => prLabelNames.includes(label));
-            console.log(isSame);
-            core.setOutput('isSame', isSame);
 
       - name: Apply labels to PR
         if: steps.check_labels.outputs.isSame == 'false'
