@@ -49,11 +49,12 @@ jobs:
         id: check_labels
         uses: actions/github-script@v7
         env:
-          allLabels: ${{ steps.get_issue_labels.outputs.allLabels }}
+          allLabels: ${{ inputs.allLabels }}
         with:
           script: |
             const allLabels = core.getInput('allLabels');
             console.log(allLabels);
+
             const labels = allLabels.split(",");
             console.log(labels);
             const prLabels = await github.rest.issues.listLabelsOnIssue({
