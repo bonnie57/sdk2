@@ -44,13 +44,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check if labels are the same
-        id: check_labels
+        id: check_labels_are_same
         uses: actions/github-script@v7
         with:
           script: |
             const allLabels = ${{ steps.get_issue_labels.outputs.result }};
-            console.log("${{steps.get_issue_labels.outputs.allLabels}}");
-            console.log("All Labels: ", allLabels);
             const prLabels = await github.rest.issues.listLabelsOnIssue({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -59,18 +57,18 @@ jobs:
             const prLabelNames = prLabels.data.map(label => label.name).join(",");
             console.log("PR Labels: ", prLabelNames);
             console.log("All Labels: ", allLabels);
-            const isSame = prLabelNames === allLabels;
-            core.setOutput('isSame', isSame);
+            console.log(prLabelNames === allLabels);
+            return prLabelNames === allLabels;
 
       - name: Apply labels to PR
-        if: steps.check_labels.outputs.isSame == 'false'
+        if: steps.check_labels_are_same.outputs.result == 'false'
         uses: actions/github-script@v7
         env:
           isSame: ${{ inputs.isSame }}
           ALL_LABELS: ${{ inputs.allLabels }}
         with:
           script: |
-            console.log("",core.getInput('isSame'));
+            console.log("${{steps.check_labels_are_same.outputs.result}}");
             const labels = core.getInput('allLabels');
             console.log(`Applying labels: ${labels}`);
             await github.rest.issues.addLabels({
