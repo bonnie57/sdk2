@@ -70,7 +70,7 @@ jobs:
           script: |
             const isSame = "${{ steps.check_labels_are_same.outputs.isSame }}";
             console.log("Is same: ", isSame);
-            const labels = "${{ steps.check_labels_are_same.outputs.labels }}"=== "" ? ][] : "${{ steps.check_labels_are_same.outputs.labels }}".split(",");
+            const labels = "${{ steps.check_labels_are_same.outputs.labels }}"=== "" ?[] : "${{ steps.check_labels_are_same.outputs.labels }}".split(",");
             console.log("Applying labels: ", labels);
             await github.rest.issues.addLabels({
               owner: context.repo.owner,
