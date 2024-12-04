@@ -54,14 +54,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const allLabels = "${{ steps.get_issue_labels.outputs.labels }}";
-            console.log("All Labels: ", allLabels);
-            const label2= "${{ steps.get_issue_labels.outputs.allLabels2 }}";
-            console.log("All Labels: ", label2);
-            const labelEmpty = core.getInput('labels_empty');
-            console.log("All Labels: ", labelEmpty);
-            const labelEmpty2 = "${{ steps.get_issue_labels.outputs.labels_empty }}";
-            console.log("All Labels: ", labelEmpty2);
+            const issueLabels = "${{ steps.get_issue_labels.outputs.labels }}";
             const prLabels = await github.rest.issues.listLabelsOnIssue({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -69,8 +62,8 @@ jobs:
             });
             const prLabelNames = prLabels.data.map(label => label.name).sort().join(",");
             console.log("PR Labels: ", prLabelNames);
-            console.log("All Labels: ", allLabels);
-            const combinedLabels = Array.from(new Set([...allLabels.split(","), ...prLabelNames.split(",")])).sort().join(",");  
+            console.log("All Labels: ", issueLabels);
+            const combinedLabels = Array.from(new Set([...issueLabels.split(","), ...prLabelNames.split(",")])).sort().join(",");  
             const isSame = prLabelNames === allLabels;
             core.setOutput('isSame', isSame.toString());
             core.setOutput('labels', combinedLabels);
@@ -78,19 +71,12 @@ jobs:
       - name: Apply labels to PR
         if: steps.check_labels_are_same.outputs.isSame == 'false'
         uses: actions/github-script@v7
-        env:
-          LABELS: ${{ steps.check_labels_are_same.outputs.labels }}
         with:
           script: |
-            console.log("${{steps.check_labels_are_same.outputs.isSame}}");
-            console.log("Applying labels: ${{ env.LABELS }}");
-            console.log("Applying labels: ${{ steps.check_labels_are_same.outputs.labels }}");
+            const isSame = "${{ steps.check_labels_are_same.outputs.isSame }}";
+            console.log("Is same: ", isSame);
             const labels = ${{ steps.check_labels_are_same.outputs.labels }}.split(",");
             console.log("Applying labels: ", labels);
-            const label2 = core.getInput('labels', labels);
-            console.log("Applying labels: ", label2);
-            const issueLabels = ${{ steps.get_issue_labels.outputs.result }}.split(",");
-            console.log(`Applying labels: ${labels}`);
             await github.rest.issues.addLabels({
               owner: context.repo.owner,
               repo: context.repo.repo,
