@@ -52,7 +52,7 @@ jobs:
         with:
           script: |
             const allLabels = core.getInput('allLabels');
-            const labels = allLabels.split(",");
+            console.log("All Labels: ", allLabels);
             const prLabels = await github.rest.issues.listLabelsOnIssue({
               owner: context.repo.owner,
               repo: context.repo.repo,
