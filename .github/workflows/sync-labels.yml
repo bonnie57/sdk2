@@ -60,8 +60,6 @@ jobs:
               issue_number: context.issue.number,
             });
             const prLabelNames = prLabels.data.map(label => label.name).sort();
-            console.log("PR Labels: ", issueLabels.split(","));
-            console.log("All Labels: ", prLabelNames.split(","));
             const combinedLabels = Array.from(new Set([...issueLabels.split(","), ...prLabelNames])).sort().join(","); 
             console.log("Combined Labels: ", combinedLabels); 
             const isSame = prLabelNames.join(",") === issueLabels;
