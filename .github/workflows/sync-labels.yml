@@ -35,7 +35,7 @@ jobs:
                 console.log(labels);
               }
               console.log("Labels: ", allLabels);
-              return Array.from(allLabels).join(",");
+              return Array.from(allLabels).sort().join(",");
             } catch (error) {
              console.log(error);
             }
@@ -54,7 +54,7 @@ jobs:
               repo: context.repo.repo,
               issue_number: context.issue.number,
             });
-            const prLabelNames = prLabels.data.map(label => label.name).join(",");
+            const prLabelNames = prLabels.data.map(label => label.name).sort().join(",");
             console.log("PR Labels: ", prLabelNames);
             console.log("All Labels: ", allLabels);
             console.log(prLabelNames === allLabels);
