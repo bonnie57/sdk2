@@ -59,6 +59,8 @@ jobs:
               issue_number: context.issue.number,
             });
             const prLabelNames = prLabels.data.map(label => label.name).join(",");
+            console.log("PR Labels: ", prLabelNames);
+            console.log("All Labels: ", allLabels);
             const isSame = prLabelNames === allLabels;
 
       - name: Apply labels to PR
