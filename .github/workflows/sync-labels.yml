@@ -64,7 +64,7 @@ jobs:
             const customLabels = prLabelsNames.filter(label => !issueLabels.includes(label));
             const combinedLabels = Array.from(new Set([...issueLabels, ...customLabels])).sort().join(",");
             console.log("Combined Labels: ", combinedLabels);
-            const isSame = combinedLabels.join(",") === prLabels.join(",");
+            const isSame = combinedLabels === prLabels.join(",");
             core.setOutput('isSame', isSame.toString());
             core.setOutput('labels', combinedLabels);
 
