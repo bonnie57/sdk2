@@ -22,6 +22,7 @@ jobs:
         with:
           script: |
             const issueNumbers = process.env.ISSUE_NUMBERS.split(",");
+            console.log(process.env);
             let allLabels = new Set();
             for (const issueNumber of issueNumbers) {
               try {
@@ -39,24 +40,21 @@ jobs:
             console.log("All Labels: ", allLabels);
             if (allLabels.size === 0) {
               console.log("No labels found");
+              core.setOutput('labels_empty', 'true');
               return '';
             } else {
               const sortedLabels = Array.from(allLabels).sort().join(",");
               console.log("Labels: ", sortedLabels);
+              core.setOutput('labels_empty', 'false');
               return sortedLabels;
-            }
-        env:
-          ISSUE_NUMBERS: ${{ env.ISSUE_NUMBERS }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check if labels are the same
         id: check_labels_are_same
-        if: steps.get_issue_labels.outputs != ''
+        if: steps.get_issue_labels.outputs.labels_empty == 'false'
         uses: actions/github-script@v7
         with:
           script: |
-            console.log("All Labels: ", ${{ steps.get_issue_labels.outputs }});
-            const allLabels = ${{ steps.get_issue_labels.outputs.result }};
+            const allLabels = "${{ steps.get_issue_labels.outputs.result }}";
             console.log("All Labels: ", allLabels);
             const prLabels = await github.rest.issues.listLabelsOnIssue({
               owner: context.repo.owner,
@@ -65,18 +63,22 @@ jobs:
             });
             const prLabelNames = prLabels.data.map(label => label.name).sort().join(",");
             console.log("PR Labels: ", prLabelNames);
-            console.log(prLabelNames === allLabels);
-            core.setOutput('labels', new Set(...(prLabelNames.split(",")),...(allLabels.split(","))));
-            return prLabelNames === allLabels;
+            console.log("All Labels: ", allLabels);
+            const combinedLabels = Array.from(new Set([...allLabels.split(","), ...prLabelNames.split(",")])).sort().join(",");  
+            const isSame = prLabelNames === allLabels;
+            core.setOutput('isSame', isSame.toString());
+            core.setOutput('labels', combinedLabels);
 
       - name: Apply labels to PR
-        if: steps.check_labels_are_same.outputs.result == 'false'
+        if: steps.check_labels_are_same.outputs.isSame == 'false'
         uses: actions/github-script@v7
         env:
           LABELS: ${{ steps.check_labels_are_same.outputs.labels }}
         with:
           script: |
-            console.log("${{steps.check_labels_are_same.outputs.result}}");
+            console.log("${{steps.check_labels_are_same.outputs.isSame}}");
+            console.log("Applying labels: ${{ env.LABELS }}");
+            console.log("Applying labels: ${{ steps.check_labels_are_same.outputs.labels }}");
             const labels = ${{ steps.check_labels_are_same.outputs.labels }}.split(",");
             console.log("Applying labels: ", labels);
             const label2 = core.getInput('labels', labels);
