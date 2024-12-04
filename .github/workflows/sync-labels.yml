@@ -38,7 +38,8 @@ jobs:
             }
             console.log("All Labels: ", allLabels);
             if (allLabels.size === 0) {
-              return "";
+              console.log("No labels found");
+              return '';
             } else {
               const sortedLabels = Array.from(allLabels).sort().join(",");
               console.log("Labels: ", sortedLabels);
