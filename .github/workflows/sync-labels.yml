@@ -21,10 +21,10 @@ jobs:
 
       - name: Get labels from issue
         uses: actions/github-script@v7
-        id: get_issue_labels
         with:
           script: |
             const issueNumbers = process.env.ISSUE_NUMBERS.split(","); 
+            console.log(process.env); 
             try {
               let allLabels = new Set();
               for (const issueNumber of issueNumbers) {
@@ -36,6 +36,7 @@ jobs:
                 labels.forEach(label => allLabels.add(label.name));
                 console.log(labels);
               }
+              console.log("Labels: ", allLabels);
               core.setOutput('allLabels', Array.from(allLabels).join(","));
             } catch (error) {
              console.log(error);
@@ -47,10 +48,13 @@ jobs:
       - name: Check if labels are the same
         id: check_labels
         uses: actions/github-script@v7
+        env:
+          allLabels: ${{ inputs.allLabels }}
         with:
           script: |
             const allLabels = core.getInput('allLabels');
             console.log(allLabels);
+            console.log("${{ steps.get_issue_labels.outputs.allLabels }}");
             const labels = allLabels.split(",");
             console.log(labels);
             const prLabels = await github.rest.issues.listLabelsOnIssue({
