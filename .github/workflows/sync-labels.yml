@@ -2,7 +2,7 @@ name: Sync Labels from Issue to PR
 
 on:
   pull_request:
-    types: [edited]
+    types: [edited, opened, synchronize]
 
 jobs:
   sync-labels:
@@ -49,6 +49,7 @@ jobs:
         with:
           script: |
             const allLabels = ${{ steps.get_issue_labels.outputs.result }};
+            console.log("All Labels: ", allLabels);
             const prLabels = await github.rest.issues.listLabelsOnIssue({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -56,17 +57,23 @@ jobs:
             });
             const prLabelNames = prLabels.data.map(label => label.name).sort().join(",");
             console.log("PR Labels: ", prLabelNames);
-            console.log("All Labels: ", allLabels);
             console.log(prLabelNames === allLabels);
+            core.setOutput('labels', new Set(...(prLabelNames.split(",")),...(allLabels.split(","))));
             return prLabelNames === allLabels;
 
       - name: Apply labels to PR
         if: steps.check_labels_are_same.outputs.result == 'false'
         uses: actions/github-script@v7
+        env:
+          LABELS: ${{ steps.check_labels_are_same.outputs.labels }}
         with:
           script: |
             console.log("${{steps.check_labels_are_same.outputs.result}}");
-            const labels = ${{ steps.get_issue_labels.outputs.result }}.split(",");
+            const labels = ${{ steps.check_labels_are_same.outputs.labels }}.split(",");
+            console.log("Applying labels: ", labels);
+            const label2 = core.getInput('labels', labels);
+            console.log("Applying labels: ", label2);
+            const issueLabels = ${{ steps.get_issue_labels.outputs.result }}.split(",");
             console.log(`Applying labels: ${labels}`);
             await github.rest.issues.addLabels({
               owner: context.repo.owner,
