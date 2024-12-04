@@ -51,7 +51,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const issueLabels = "${{ steps.get_issue_labels.outputs.labels }}"=== "" ? [] : "${{ steps.get_issue_labels.outputs.labels }}".split(",");
+            const issueLabels = "${{ steps.get_issue_labels.outputs.labels }}";
             const prLabels = await github.rest.issues.listLabelsOnIssue({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -59,12 +59,9 @@ jobs:
             });
             console.log(prLabels);
             const prLabelsNames = prLabels.data.map(label => label.name).sort();
-            const customLabels = prLabelsNames.filter(label => !issueLabels.includes(label));
-            const combinedLabels = Array.from(new Set([...issueLabels, ...customLabels])).sort().join(",");
-            console.log("Combined Labels: ", combinedLabels);
-            const isSame = combinedLabels === prLabelsNames.join(",");
+            const isSame = issueLabels === prLabelsNames.join(",");
             core.setOutput('isSame', isSame.toString());
-            core.setOutput('labels', combinedLabels);
+            core.setOutput('labels', issueLabels);
 
       - name: Apply labels to PR
         if: steps.check_labels_are_same.outputs.isSame == 'false'
