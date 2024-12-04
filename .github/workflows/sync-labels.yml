@@ -59,6 +59,7 @@ jobs:
               repo: context.repo.repo,
               issue_number: context.issue.number,
             });
+            console.log(prLabels);
             const prLabelNames = prLabels.data.map(label => label.name).sort();
             const combinedLabels = Array.from(new Set([...issueLabels.split(","), ...prLabelNames])).sort().join(","); 
             console.log("Combined Labels: ", combinedLabels); 
@@ -81,4 +82,3 @@ jobs:
               issue_number: context.issue.number,
               labels: labels.split(","),
             });
-           
