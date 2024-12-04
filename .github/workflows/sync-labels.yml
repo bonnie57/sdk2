@@ -39,21 +39,19 @@ jobs:
             console.log("All Labels: ", allLabels);
             if (allLabels.size === 0) {
               console.log("No labels found");
-              core.setOutput('labels_empty', 'true');
+              core.setOutput('labels', '');
             } else {
               const sortedLabels = Array.from(allLabels).sort().join(",");
               console.log("Labels: ", sortedLabels);
-              core.setOutput('labels_empty', 'false');
               core.setOutput('labels', sortedLabels);
             }
 
       - name: Check if labels are the same
         id: check_labels_are_same
-        if: steps.get_issue_labels.outputs.labels_empty == 'false'
         uses: actions/github-script@v7
         with:
           script: |
-            const issueLabels = "${{ steps.get_issue_labels.outputs.labels }}".split(",");
+            const issueLabels = "${{ steps.get_issue_labels.outputs.labels }}"=== "" ? [] : "${{ steps.get_issue_labels.outputs.labels }}".split(",");
             const prLabels = await github.rest.issues.listLabelsOnIssue({
               owner: context.repo.owner,
               repo: context.repo.repo,
