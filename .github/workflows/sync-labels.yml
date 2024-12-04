@@ -36,7 +36,7 @@ jobs:
                 labels.forEach(label => allLabels.add(label.name));
                 console.log(labels);
               }
-              core.setOutput('allLabels', Array.from(allLabels));
+              core.setOutput('allLabels', Array.from(allLabels).join(","));
             } catch (error) {
              console.log(error);
             }
@@ -50,7 +50,6 @@ jobs:
         with:
           script: |
             const allLabels = core.getInput('allLabels');
-
             console.log(allLabels);
             const labels = allLabels.split(",");
             console.log(labels);
