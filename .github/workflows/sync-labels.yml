@@ -44,7 +44,8 @@ jobs:
               const sortedLabels = Array.from(allLabels).sort().join(",");
               console.log("Labels: ", sortedLabels);
               core.setOutput('labels_empty', 'false');
-              core.setOutput('allLabels', allLabels);
+              core.setOutput('labels', sortedLabels);
+              core.setOutput('allLabels2', allLabels);
             }
 
       - name: Check if labels are the same
@@ -53,10 +54,14 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const allLabels = "${{ steps.get_issue_labels.outputs.sortedLabels }}";
+            const allLabels = "${{ steps.get_issue_labels.outputs.labels }}";
             console.log("All Labels: ", allLabels);
-            const label2= "${{ steps.get_issue_labels.outputs.allLabels }}";
+            const label2= "${{ steps.get_issue_labels.outputs.allLabels2 }}";
             console.log("All Labels: ", label2);
+            const labelEmpty = core.getInput('labels_empty');
+            console.log("All Labels: ", labelEmpty);
+            const labelEmpty2 = "${{ steps.get_issue_labels.outputs.labels_empty }}";
+            console.log("All Labels: ", labelEmpty2);
             const prLabels = await github.rest.issues.listLabelsOnIssue({
               owner: context.repo.owner,
               repo: context.repo.repo,
