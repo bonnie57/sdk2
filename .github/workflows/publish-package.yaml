@@ -59,20 +59,33 @@ jobs:
     steps:
       - name: Fail if version is the same
         run: |
-          if [ "${{ needs.fetch_latest_version.outputs.core_sdk_latest_version }}" == "${{ needs.print_version_to_publish.outputs.core_sdk_version_to_be_published }}" ]; then
-            echo "The @bonnie37/core-sdk version to be published is the same as the latest version on NPM. "
-          else 
-            echo "IS_PUBLISH_CORE_SDK=true" >> $GITHUB_OUTPUT
-          fi
-          if [ "${{ needs.fetch_latest_version.outputs.react_sdk_latest_version }}" == "${{ needs.print_version_to_publish.outputs.react_sdk_version_to_be_published }}" ]; then
-            echo "The @bonnie37/react-sdk version to be published is the same as the latest version on NPM. "
+          CORE_SDK_LATEST_VERSION="${{ needs.fetch_latest_version.outputs.core_sdk_latest_version }}"
+          CORE_SDK_VERSION_TO_BE_PUBLISHED="${{ needs.print_version_to_publish.outputs.core_sdk_version_to_be_published }}"
+          REACT_SDK_LATEST_VERSION="${{ needs.fetch_latest_version.outputs.react_sdk_latest_version }}"
+          REACT_SDK_VERSION_TO_BE_PUBLISHED="${{ needs.print_version_to_publish.outputs.react_sdk_version_to_be_published }}"
+
+          IS_PUBLISH_CORE_SDK=false
+          IS_PUBLISH_REACT_SDK=false
+
+          if [ "$CORE_SDK_LATEST_VERSION" == "$CORE_SDK_VERSION_TO_BE_PUBLISHED" ]; then
+            echo "The @bonnie37/core-sdk version to be published is the same as the latest version on NPM."
           else
-            echo "IS_PUBLISH_REACT_SDK=true" >> $GITHUB_OUTPUT
+            IS_PUBLISH_CORE_SDK=true
           fi
-          if [ "${{ needs.fetch_latest_version.outputs.core_sdk_latest_version }}" == "${{ needs.print_version_to_publish.outputs.core_sdk_version_to_be_published }}" ] && [ "${{ needs.fetch_latest_version.outputs.react_sdk_latest_version }}" == "${{ needs.print_version_to_publish.outputs.react_sdk_version_to_be_published }}" ]; then
-            echo "The @bonnie37/core-sdk and @bonnie37/react-sdk versions to be published are the same as the latest versions on NPM. "
+
+          if [ "$REACT_SDK_LATEST_VERSION" == "$REACT_SDK_VERSION_TO_BE_PUBLISHED" ]; then
+            echo "The @bonnie37/react-sdk version to be published is the same as the latest version on NPM."
+          else
+            IS_PUBLISH_REACT_SDK=true
+          fi
+
+          if [ "$CORE_SDK_LATEST_VERSION" == "$CORE_SDK_VERSION_TO_BE_PUBLISHED" ] && [ "$REACT_SDK_LATEST_VERSION" == "$REACT_SDK_VERSION_TO_BE_PUBLISHED" ]; then
+            echo "The @bonnie37/core-sdk and @bonnie37/react-sdk versions to be published are the same as the latest versions on NPM."
             exit 1
           fi
+
+          echo "IS_PUBLISH_CORE_SDK=$IS_PUBLISH_CORE_SDK" >> $GITHUB_OUTPUT
+          echo "IS_PUBLISH_REACT_SDK=$IS_PUBLISH_REACT_SDK" >> $GITHUB_OUTPUT
 
   fetch_last_tag:
     needs: [fail_if_version_is_same]

@@ -38,6 +38,9 @@ jobs:
               }
               console.log("Labels: ", allLabels);
               core.setOutput('allLabels', Array.from(allLabels));
+            } catch (error) {
+             console.log(error);
+            }
         env:
           ISSUE_NUMBERS: ${{ env.ISSUE_NUMBERS }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
