@@ -1,4 +1,4 @@
-name: Sync Labels from Linear Issue to PR
+name: Sync Labels from Issue to PR
 
 on:
   pull_request:
