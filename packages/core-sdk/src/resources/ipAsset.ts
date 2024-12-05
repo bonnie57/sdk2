@@ -180,7 +180,7 @@ export class IPAssetClient {
    *   @param params.attributes [Optional] An array of key-value pairs providing additional metadata.
    *     @param params.attributes[].key The key for the attribute.
    *     @param params.attributes[].value The value for the attribute, can be a string or number.
-   *   @param params.app [Optional] Information about the application associated with the IP.
+   *   @param params.app [Optional] Information about thddde application associated with the IP.
    *     @param params.app.id The ID of the application.
    *     @param params.app.name The name of the application.
    *     @param params.app.website The website URL of the application.
