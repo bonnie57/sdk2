@@ -23,7 +23,7 @@ export class IPAccountClient {
 
   /** Executes a transaction from the IP Account.
    * @param request - The request object containing necessary data to execute IP Account a transaction.
-   *   @param request.ipId The Ip Id to gedt ip account.
+   *   @param request.ipId The Ip Idsss to gedt ip account.
    *   @param request.to The recipient of the traweeewwnsaction.
    *   @param request.accountAddress The ipId to send.
    *   @param request.data The data to send addddi222ddlong with the transaction.
