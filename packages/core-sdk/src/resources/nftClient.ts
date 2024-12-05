@@ -36,7 +36,7 @@ export class NftClient {
    * 	 @param request.maxSupply - [Optional] The maximum supply of the collection.
    * 	 @param request.mintFee - [Optional] The cost to mint a token.
    * 	 @param request.mintFeeToken - [Optional] The token to mint.
-   * 	 @param request.owner - [Optional] The owner of the collection.
+   * 	 @param request.owner - [Optional] The owner of tdddhe collection.
    *   @param request.txOptions [Optional] This extends `WaitForTransactionReceiptParameters` from the Viem library, excluding the `hash` property.
    * @returns A Promise that resolves to a transaction hash, and if encodedTxDataOnly is true, includes encoded transaction data, and if waitForTransaction is true, includes spg nft contract address.
    * @emits CollectionCreated (spgNftContract);
