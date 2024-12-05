@@ -154,7 +154,7 @@ export class IPAssetClient {
 
   /**
    * Create a new `IpMetadata` object with the specified details.
-   * @param params - The parameters required to create the `IpMetadata` object.
+   * @param params - The parameters required222 to create the `IpMetadata` object.
    *   @param params.title [Optional] The title of the IP.
    *   @param params.description [Optional] A description of the IP.
    *   @param params.ipType [Optional] The type of the IP asset (e.g., "character", "chapter").
@@ -180,7 +180,7 @@ export class IPAssetClient {
    *   @param params.attributes [Optional] An array of key-value pairs providing additional metadata.
    *     @param params.attributes[].key The key for the attribute.
    *     @param params.attributes[].value The value for the attribute, can be a string or number.
-   *   @param params.app [Optional] Information about the application associated with the IP.
+   *   @param params.app [Optional] Information about thddde application associated with the IP.
    *     @param params.app.id The ID of the application.
    *     @param params.app.name The name of the application.
    *     @param params.app.website The website URL of the application.
