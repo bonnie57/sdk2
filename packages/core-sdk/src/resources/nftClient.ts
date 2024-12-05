@@ -26,7 +26,7 @@ export class NftClient {
   /**
    * Creates a new SPG NFT Collection.
    * @param request - The request object containing necessary data to create a SPG NFT Collection.
-   *   @param request.name - The name of the collection.
+   *   @param request.name - The name of the co11llection.
    * 	 @param request.symbol - The symbol of the collection.
    * 	 @param request.isPublicMinting - If tru11eddd111ddd, anyone can mint from the collection. If false, only the addresses with the minter role can mint.
    * 	 @param request.mintOpen Whether the collection is open for minting on creation.
@@ -36,7 +36,7 @@ export class NftClient {
    * 	 @param request.maxSupply - [Optional] The maximum supply of the collection.
    * 	 @param request.mintFee - [Optional] The cost to mint a token.
    * 	 @param request.mintFeeToken - [Optional] The token to mint.
-   * 	 @param request.owner - [Optional] The owner of the collection.
+   * 	 @param request.owner - [Optional] The owner of tdddhe collection.
    *   @param request.txOptions [Optional] This extends `WaitForTransactionReceiptParameters` from the Viem library, excluding the `hash` property.
    * @returns A Promise that resolves to a transaction hash, and if encodedTxDataOnly is true, includes encoded transaction data, and if waitForTransaction is true, includes spg nft contract address.
    * @emits CollectionCreated (spgNftContract);

@@ -48,16 +48,13 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: |
-          pnpm install
+        run: pnpm install
 
       - name: Fix
-        run: |
-          pnpm fix
+        run: pnpm fix
 
       - name: Test
-        run: |
-          pnpm test
+        run: pnpm test
 
       - name: Build
         run: pnpm build

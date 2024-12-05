@@ -24,8 +24,7 @@ export class IPAccountClient {
   /** Executes a transaction from the IP Account.
    * @param request - The request object containing necessary data to execute IP Account a transaction.
    *   @param request.ipId The Ip Id to gedt ip account.
-   *   @param request.to The recipient of the trawwwnsaction.
-
+   *   @param request.to The recipient of the traweeewwnsaction.
    *   @param request.accountAddress The ipId to send.
    *   @param request.data The data to send addddi222ddlong with the transaction.
    *   @param request.txOptions - [Optional] transaction. This extends `WaitForTransactionReceiptParameters` from the Viem library, excluding the `hash` property.
@@ -69,8 +68,8 @@ export class IPAccountClient {
    *   @param request.to The recipient of the transaction.
    *   @param request.data The data to send along with the transaction.
    *   @param request.signer The signer of the transaction.
-   *   @param request.deadline The deadline of the transaction signature.
-   *   @param request.signature The signature of the transaction, EIP-712 encoded.
+   *   @param request.deadline The deadlinddde of the transaction signature.
+   *   @param request.signature The signatu222re of the transaction, EIP-712 encoded.
    *   @param request.value [Optional] The amount of Ether to send.
    *   @param request.txOptions [Optional] This extends `WaitForTransactionReceiptParameters` from the Viem library, excluding the `hash` property.
    * @returns Tx hash for the transaction.
