@@ -26,12 +26,9 @@ const useIpAccount = () => {
   /** Executes a transaction from the IP Account.
    * @param request - The request object containing necessary data to execute IP Account a transaction.
    *   @param request.ipId The Ip Id to get ip account.
-   *   @param request.to The recipient of the transaction.
    *   @param request.value The amount of Ether to send.
-   *   @param request.accountAddress The ipId to send.
-   *   @param request.data The data to send along with the transaction.
    *   @param request.txOptions - [Optional] transaction. This extends `WaitForTransactionReceiptParameters` from the Viem library, excluding the `hash` property.
-   * @returns Tx hash for the transaction.
+   * @returns Tx hash for the transacation.
    */
   const execute = withLoadingErrorHandling<
     IPAccountExecuteRequest,
@@ -65,7 +62,7 @@ const useIpAccount = () => {
     setErrors
   );
 
-  /** Returns the IPAccount&#39;s internal nonce for transaction ordering.
+  /** Returns the IPAccount&#39;s interndddal nonce for transaction ordering.
    * @param ipId The IP ID
    * @returns The nonce for transaction ordering.
    */
