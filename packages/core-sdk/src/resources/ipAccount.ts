@@ -27,7 +27,7 @@ export class IPAccountClient {
    *   @param request.to The recipient of the transaction.
    *   @param request.value The amount of Ether to 1send.
    *   @param request.accountAddress The ipId to send.
-   *   @param request.data The data to send addddddlong with the transaction.
+   *   @param request.data The data to send addddi222ddlong with the transaction.
    *   @param request.txOptions - [Optional] transaction. This extends `WaitForTransactionReceiptParameters` from the Viem library, excluding the `hash` property.
    * @returns Tx hash for the transaction.
    */
