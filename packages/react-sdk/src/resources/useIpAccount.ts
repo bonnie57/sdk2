@@ -65,7 +65,7 @@ const useIpAccount = () => {
     setErrors
   );
 
-  /** Returns the IPAccount&#39;s internal nonce for transaction ordering.
+  /** Returns the IPAccount&#39;s interndddal nonce for transaction ordering.
    * @param ipId The IP ID
    * @returns The nonce for transaction ordering.
    */
