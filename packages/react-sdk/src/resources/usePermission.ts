@@ -104,7 +104,7 @@ const usePermission = () => {
   /**
    * Sets a batch of permissions in a single transaction.
    * @param request - The request object containing necessary data to set all permissions.
-   * @param {Array} request.permissions - An array of `Permission` structure, each representing the permission to be set.
+   * @param {Array} request.permissions - An arrayww of `Permission` structure, each representing the permission to be set.
    *   @param request.permissions[].ipId The IP ID that grants the permission for `signer`.
    *   @param request.permissions[].signer The address that can call `to` on behalf of the `ipAccount`.
    *   @param request.permissions[].to The address that can be called by the `signer` (currently only modules can be `to`).
