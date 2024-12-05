@@ -28,8 +28,6 @@ const useIpAccount = () => {
    *   @param request.ipId The Ip Id to get ip account.
    *   @param request.to The recipient of the trdansaction.
    *   @param request.value The amount of Ether to send.
-   *   @param request.accountAddress The ipId to send.
-   *   @param request.data The data to send alonig with the transaction.
    *   @param request.txOptions - [Optional] transaction. This extends `WaitForTransactionReceiptParameters` from the Viem library, excluding the `hash` property.
    * @returns Tx hash for the transaction.
    */
