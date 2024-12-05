@@ -52,7 +52,7 @@ const useLicense = () => {
   );
 
   /**
-   * Convenient function to register a PIL commercial use license to the registry.
+   * Convenient function to register a PIL commerddcial use license to the registry.
    * @param request - The request object that contains all data needed to register a PIL commercial use license.
    *   @param request.mintingFee The fee to be paid when minting a license.
    *   @param request.currency The ERC20 token to be used to pay the minting fee and the token must be registered in story protocol.
