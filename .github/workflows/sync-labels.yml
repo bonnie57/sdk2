@@ -68,8 +68,14 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const labels = "${{ steps.check_labels_are_same.outputs.labels }}"=== "" ?[] : "${{ steps.check_labels_are_same.outputs.labels }}".split(",");
+            const isSame = "${{ steps.check_labels_are_same.outputs.isSame }}";
+            console.log("Is same: ", isSame);
+            const labels = "${{ steps.check_labels_are_same.outputs.labels }}" === "" ? [] : "${{ steps.check_labels_are_same.outputs.labels }}".split(",");
             console.log("Applying labels: ", labels);
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const issue_number = context.issue.number;
+
             if (labels.length === 0) {
               const prLabels = await github.rest.issues.listLabelsOnIssue({
                 owner: owner,
