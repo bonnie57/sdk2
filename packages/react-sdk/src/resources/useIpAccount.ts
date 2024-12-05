@@ -31,7 +31,7 @@ const useIpAccount = () => {
    *   @param request.accountAddress The ipId to send.
    *   @param request.data The data to send along with the transaction.
    *   @param request.txOptions - [Optional] transaction. This extends `WaitForTransactionReceiptParameters` from the Viem library, excluding the `hash` property.
-   * @returns Tx hash for the transaction.
+   * @returns Tx hash for the transacation.
    */
   const execute = withLoadingErrorHandling<
     IPAccountExecuteRequest,
