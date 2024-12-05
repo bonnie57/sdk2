@@ -72,7 +72,8 @@ jobs:
             console.log("Is same: ", isSame);
             const labels = "${{ steps.check_labels_are_same.outputs.labels }}"=== "" ?[] : "${{ steps.check_labels_are_same.outputs.labels }}".split(",");
             console.log("Applying labels: ", labels);
-            await github.rest.issues.addLabels({
+            //TODO: setLabels instead of addLabels
+            await github.rest.issues.createLabel({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
