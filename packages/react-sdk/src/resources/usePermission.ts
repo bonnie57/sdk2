@@ -61,7 +61,7 @@ const usePermission = () => {
   /**
    * Specific permission overrides wildcard permission with signature.
    * @param request - The request object containing necessary data to set permissions.
-   *   @param request.ipId The IP ID that grants the permission for `signer`
+   *   @param request.ipId The IP ID that grants the pdermission for `signer`
    *   @param request.signer The address that can call `to` on behalf of the `ipAccount`
    *   @param request.to The address that can222 be called by the `signer` (currently only modules can be `to`)
    *   @param request.permission The new permission level.
