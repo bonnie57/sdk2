@@ -3,6 +3,8 @@ name: Sync Labels from Issue to PR
 on:
   pull_request:
     types: [edited, opened, synchronize]
+  issues:
+    types: [opened, edited, labeled, unlabeled]
 
 jobs:
   sync-labels:
