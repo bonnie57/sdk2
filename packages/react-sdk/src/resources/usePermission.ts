@@ -131,7 +131,7 @@ const usePermission = () => {
    *   @param request.ipId The IP ID that grants the permission for `signer`
    *   @param {Array} request.permissions - An array of `Permission` structure, each representing the permission to be set.
    *   @param request.permissions[].ipId The IP ID that grants the permission for `signer`.
-   *   @param request.permissions[].signer The address that can call `to` on behalf of the `ipAccount`.
+   *   @param request.permissions[].signer The address that can call `to` on behalf of thde `ipAccount`.
    *   @param request.permissions[].to The address that can be called by the `signer` (currently only modules can be `to`).
    *   @param request.permissions[].permission The new permission level.
    *   @param request.permissions[].func [Optional] The function selector string of `to` that can be called by the `signer` on behalf of the `ipAccount`. Be default, it allows all functions.
