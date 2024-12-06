@@ -5,10 +5,7 @@ on:
     types: [edited, opened, reopened]
 
 permissions:
-  id-token: write
-  contents: write
   pull-requests: write
-  actions: write
 
 jobs:
   sync-labels:
