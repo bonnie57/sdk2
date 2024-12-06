@@ -31,18 +31,14 @@ jobs:
                   repo: context.repo.repo,
                 });
                 labels.forEach(label => allLabels.add(label.name));
-                console.log(labels);
               } catch (error) {
                 console.error(`Error fetching labels for issue #${issueNumber}: `, error);
               }
             }
-            console.log("All Labels: ", allLabels);
             if (allLabels.size === 0) {
-              console.log("No labels found");
               core.setOutput('labels', '');
             } else {
               const sortedLabels = Array.from(allLabels).sort().join(",");
-              console.log("Labels: ", sortedLabels);
               core.setOutput('labels', sortedLabels);
             }
 
@@ -57,7 +53,6 @@ jobs:
               repo: context.repo.repo,
               issue_number: context.issue.number,
             });
-            console.log(prLabels);
             const prLabelsNames = prLabels.data.map(label => label.name).sort();
             const isSame = issueLabels === prLabelsNames.join(",");
             core.setOutput('isSame', isSame.toString());
@@ -69,9 +64,7 @@ jobs:
         with:
           script: |
             const isSame = "${{ steps.check_labels_are_same.outputs.isSame }}";
-            console.log("Is same: ", isSame);
             const labels = "${{ steps.check_labels_are_same.outputs.labels }}" === "" ? [] : "${{ steps.check_labels_are_same.outputs.labels }}".split(",");
-            console.log("Applying labels: ", labels);
             const owner = context.repo.owner;
             const repo = context.repo.repo;
             const issue_number = context.issue.number;
